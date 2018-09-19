@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
 import AuthService from './services'
+import Header from './components/Header'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import ProtectedExample from './pages/ProtectedExample'
@@ -13,6 +14,7 @@ class App extends Component {
 		let auth = new AuthService()
 		return (
 			<div>
+				<Header />
 				<Router>
 					{(auth.loggedIn())
 					// if logged in
