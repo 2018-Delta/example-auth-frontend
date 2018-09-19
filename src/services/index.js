@@ -11,6 +11,7 @@ export default class AuthService {
 			method: "POST",
 			body: JSON.stringify(email, password),
 		})
+		.then(res => res)
 	}
 
 	register = (user) => {
@@ -18,6 +19,7 @@ export default class AuthService {
 			method: "POST",
 			body: JSON.stringify(user),
 		})
+		.then(res => res)
 	}
 
 	loggedIn() {
@@ -79,7 +81,7 @@ export default class AuthService {
 			let token = res.headers.get('Authorization')
 			// set a token, taken out of response from API
 			this.setToken(token)
-			return
+			return res.json()
 		})
 		.catch(err => {
 			console.log("::: FETCH ERROR CAUGHT:::", err)

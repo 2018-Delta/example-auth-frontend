@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 
 import AuthService from '../services'
 
@@ -8,6 +9,7 @@ class Login extends Component {
 
         this.auth = new AuthService()
         this.state = {
+            success: false,
             user: {
                 email: "",
                 password: ""
@@ -39,6 +41,7 @@ class Login extends Component {
                         value="Login"
                     />
                 </form>
+                {this.state.success && <Redirect to="/protected" />}
             </main>
         )
     }
@@ -65,6 +68,18 @@ class Login extends Component {
         e.preventDefault()
         // this function requires an email and password
         this.auth.login(this.state)
+        .then(json => {
+			console.log("handling any errors");
+			if(json.errors) {
+				this.setState({
+					errors: json.errors
+				})
+			}
+			return json
+		})
+        .then(json => {
+            this.setState({success: true})
+        })
     }
 }
 
