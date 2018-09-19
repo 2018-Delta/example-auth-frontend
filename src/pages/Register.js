@@ -75,12 +75,16 @@ class RegisterPage extends Component {
 
 		this.auth.register(this.state.form)
 		.then(json => {
-			console.log("Got to second then:", json)
+			console.log("handling any errors");
 			if(json.errors) {
 				this.setState({
 					errors: json.errors
 				})
 			}
+			return json
+		})
+		.then(json => {
+			console.log("redirect");
 			this.setState({
 				registerSuccess: true
 			})
