@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 
 import AuthService from '../services'
+import Header from '../components/Header'
 
 class Login extends Component {
     constructor(props) {
@@ -21,6 +22,7 @@ class Login extends Component {
         let { email, password } = this.state.user
         return (
             <main>
+                <Header />
                 <form onSubmit={this.handleSubmit}>
                     <input
                         type="email"
@@ -41,7 +43,6 @@ class Login extends Component {
                         value="Login"
                     />
                 </form>
-                {this.state.success && <Redirect to="/protected" />}
             </main>
         )
     }
@@ -77,9 +78,6 @@ class Login extends Component {
 			}
 			return json
 		})
-        .then(json => {
-            this.setState({success: true})
-        })
     }
 }
 

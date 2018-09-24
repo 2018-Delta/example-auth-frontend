@@ -1,17 +1,41 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 
 import AuthService from '../services'
 
-class Header extends Component {
-    render() {
-        let auth = new AuthService()
+const auth = new AuthService()
+let initialStatus = auth.loggedIn()
 
-        // check if the user is logged in or not
-        if(auth.loggedIn()){
-            return ( <button onClick={auth.logout}> Logout </button> )
-        } else {
-            return( <a href="/login"><button> Login </button></a>)
+class Header extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            loggedIn: initialStatus
         }
+    }
+    render() {
+        if(this.state.status || auth.loggedIn()){
+            return (
+                <div>
+                    <button onClick={this.logout}> Logout </button>
+                    {(!this.state.loggedIn) && <Redirect to="/login" />}
+                </div>
+            )
+        } else {
+            return(
+                <div>
+                    <a href="/login"><button> Login </button></a>
+                    {(this.state.loggedIn) && <Redirect to="/protected" />}
+                </div>
+            )
+        }
+    }
+
+    logout = () => {
+        auth.logout()
+        this.setState({
+            loggedIn: false
+        })
     }
 }
 

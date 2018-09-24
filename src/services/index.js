@@ -15,6 +15,7 @@ export default class AuthService {
 	}
 
 	register = (user) => {
+		console.log("Starting Register Request", user);
 		return this.authFetch(`${this.domain}/users`, {
 			method: "POST",
 			body: JSON.stringify(user),
@@ -76,8 +77,9 @@ export default class AuthService {
 			headers,
 			...options
 		})
-		.then(this._checkStatus)
+		.then(res => this._checkStatus(res))
 		.then(res => {
+			console.log(res.headers.get('Authorization'))
 			let token = res.headers.get('Authorization')
 			// set a token, taken out of response from API
 			this.setToken(token)

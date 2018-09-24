@@ -12,23 +12,23 @@ class App extends Component {
 	render() {
 		// creates new instance of AuthService class
 		let auth = new AuthService()
+		
 		return (
 			<div>
-				<Header />
 				<Router>
 					{(auth.loggedIn())
 					// if logged in
 					? <Switch>
-						<Route path="/public" component={PublicExample} />
-						<Route path="/protected" component={ProtectedExample} />
-						<Route path="/register" component={Register} />
+						<Route exact path="/public" component={PublicExample} />
+						<Route exact path="/protected" component={ProtectedExample} />
+						<Route exact path="/register" component={Register} />
 					</Switch>
 					// if not logged in (ie Guest User)
 					: <Switch>
-						<Route path="/public" component={PublicExample} />
+						<Route exact path="/public" component={PublicExample} />
 						<Redirect from="/protected" to="/register" />
-						<Route path="/register" component={Register} />
-						<Route path="/login"
+						<Route exact path="/register" component={Register} />
+						<Route exact path="/login"
 						component={Login} />
 					</Switch>}
 				</Router>

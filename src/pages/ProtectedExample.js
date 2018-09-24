@@ -1,9 +1,14 @@
 import React, { Component } from 'react'
 
+import Header from '../components/Header'
+
 class ProtectedExample extends Component {
     render() {
         return (
-            <div>This page is protected!</div>
+            <div>
+                <Header />
+                <p>This page is protected!</p>
+            </div>
         )
     }
 }
