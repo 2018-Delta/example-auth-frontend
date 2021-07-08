@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 
 import AuthService from '../services'
+import Header from '../components/Header'
 
 class RegisterPage extends Component {
 	constructor(props) {
@@ -9,7 +10,6 @@ class RegisterPage extends Component {
 
 		this.auth = new AuthService()
 		this.state = {
-			registerSuccess: false,
 			errors: "",
 			form: {
 				user: {
@@ -26,6 +26,7 @@ class RegisterPage extends Component {
 		let { firstName, lastName, email, password } = this.state.form.user
 		return (
 			<main>
+				<Header />
 				<h2>Welcome! Register here.</h2>
 				<form onSubmit={this.onSubmit}>
 					<input
@@ -57,7 +58,6 @@ class RegisterPage extends Component {
 					{this.state.errors.password && <div>Error: Password  {this.state.errors.password[0]}</div>}
 					<button onSubmit={this.onSubmit}>Register</button>
 				</form>
-				{this.state.registerSuccess && <Redirect to="/protected" />}
 			</main>
 		)
 	}
@@ -75,15 +75,13 @@ class RegisterPage extends Component {
 
 		this.auth.register(this.state.form)
 		.then(json => {
-			console.log("Got to second then:", json)
+			console.log("handling any errors");
 			if(json.errors) {
 				this.setState({
 					errors: json.errors
 				})
 			}
-			this.setState({
-				registerSuccess: true
-			})
+			return json
 		})
 	}
 }
